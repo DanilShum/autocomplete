@@ -14,6 +14,12 @@ search__section.onclick = function() {
         search__label.classList.add('search__label-transition');
     } 
 };
+search__input.onfocus = function() {
+    if (search__input.onfocus) {
+        search__label.classList.add('search__label-transition');
+        search__arrowWrapper.classList.add('search__arrow-wrapper__transform');
+    }
+};
 search__input.onblur = function() {
     if (search__input.onblur) {
         search__label.classList.remove('search__label-transition');

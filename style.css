@@ -42,7 +42,8 @@ body    {
 }
 
 .search__section:hover,
-.search__section:hover > .search__input {
+.search__section:hover > .search__input,
+.search__listing li:hover {
     background: rgb(223, 223, 223);
     transition: .3s ease-in-out;
 }
@@ -98,5 +99,31 @@ body    {
 
 
 /***********/
+.search__listing-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    box-shadow: 0 0 20px #ccc;
+    
+}
+.search__section:focus-within ~ .search__listing-wrapper {
+    opacity: 1;
+    visibility: visible;
+    overflow-y: scroll;
+    
+    height: 400px;
+    width: 700px;
+}
 
-
+.search__listing {
+    list-style: none;
+    padding: 0;
+}
+.search__listing li {
+    cursor: pointer;
+    padding: 10px 0 10px 40px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
