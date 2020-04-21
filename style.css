@@ -1,3 +1,115 @@
 *, *:before, *:after {
     box-sizing: border-box;
+    
 }
+body    {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+input {
+    font-size: 16px;
+    font-family: sans-serif;
+}
+.search {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    
+   
+}
+.search__label {
+    padding: 20px;
+    width: 700px;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    background: rgb(241, 241, 241);
+    border-radius: 40px;
+    border: 1px solid #ccc;
+    transition: background .2s ease-in-out;
+    cursor: text;
+}
+.search__input {
+    width: 650px;
+    margin-top: 5px;
+    padding: 0 20px;
+    border: none;
+    outline: none;
+    background-color:transparent;
+    
+}
+
+.search__label:focus-within .search__action,
+.search__input:not(:placeholder-shown) + .search__action {
+    transform: translate(-5px, -15px) scale(0.8);
+    color: rgb(80, 110, 245);
+    
+}
+
+.search__label:hover {
+    background: #ccc;
+}
+.search__label:focus-within {
+    background: rgb(241, 241, 241);
+}
+.search__action {
+    position: absolute;
+    z-index: 1;
+    left: 40px;
+    top: calc(50% - 9px);
+    cursor: text;
+    color: rgb(136, 135, 135);
+    transition: transform .2s ease-in-out, color .2s ease-in-out;
+}
+.search__arrow-wrapper {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 25px;
+    top: calc(50% - 5px);
+    cursor: text;
+    border: 8px solid transparent;
+    border-top-color: rgb(136, 135, 135);
+    border-bottom: 0;
+    transition: transform .2s ease-in-out, border-top-color .2s ease-in-out;
+}
+
+.search__label:focus-within .search__arrow-wrapper {
+    transform: rotate(180deg);
+    border-top-color: rgb(80, 110, 245);
+    
+}
+/***********************/
+.search__listing {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0 auto;
+    box-shadow: 0 0 20px #ccc;
+    list-style: none;
+    
+}
+.search__label:focus-within ~ .search__listing,
+.search__listing:active {
+    opacity: 1;
+    visibility: visible;
+    overflow-y: auto;
+    height: 400px;
+    width: 700px;
+}
+.search__listing li {
+    cursor: pointer;
+    padding: 10px 0 10px 40px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: background 0.2s ease-in-out;
+}
+.search__listing li:hover {
+    background: #ccc;
+    
+} 
