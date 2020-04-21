@@ -31,6 +31,8 @@ input {
     transition: background .2s ease-in-out;
     cursor: text;
 }
+
+
 .search__input {
     width: 650px;
     margin-top: 5px;
@@ -38,7 +40,6 @@ input {
     border: none;
     outline: none;
     background-color:transparent;
-    
 }
 
 .search__label:focus-within .search__action,
@@ -68,7 +69,7 @@ input {
     height: 0;
     position: absolute;
     right: 25px;
-    top: calc(50% - 5px);
+    top: 50%;
     cursor: text;
     border: 8px solid transparent;
     border-top-color: rgb(136, 135, 135);
@@ -109,7 +110,17 @@ input {
     text-overflow: ellipsis;
     transition: background 0.2s ease-in-out;
 }
+.search__listing li > span {
+    background: rgb(200, 200, 200);
+    
+}
 .search__listing li:hover {
     background: #ccc;
     
-} 
+}
+.search__listing li::first-letter {
+    text-transform: uppercase;
+}
+.available {
+    display: none;
+}
