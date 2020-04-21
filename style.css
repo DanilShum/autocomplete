@@ -38,14 +38,14 @@ input {
     border: none;
     outline: none;
     background-color:transparent;
-    transition: background .2s ease-in-out;
+    
 }
 
 .search__label:focus-within .search__action,
 .search__input:not(:placeholder-shown) + .search__action {
     transform: translate(-5px, -15px) scale(0.8);
     color: rgb(80, 110, 245);
-    transition: transform .2s ease-in-out, color .2s ease-in-out;
+    
 }
 
 .search__label:hover {
@@ -73,13 +73,13 @@ input {
     border: 8px solid transparent;
     border-top-color: rgb(136, 135, 135);
     border-bottom: 0;
-    transition: transform .1s ease-in-out, border-top-color .1s ease-in-out;
+    transition: transform .2s ease-in-out, border-top-color .2s ease-in-out;
 }
 
 .search__label:focus-within .search__arrow-wrapper {
     transform: rotate(180deg);
     border-top-color: rgb(80, 110, 245);
-    transition: transform .1s ease-in-out, border-top-color .1s ease-in-out;
+    
 }
 /***********************/
 .search__listing {
@@ -87,12 +87,12 @@ input {
     visibility: hidden;
     height: 0;
     width: 0;
-    box-shadow: 0 0 20px #ccc;
-    list-style: none;
     padding: 0;
     margin: 0 auto;
+    box-shadow: 0 0 20px #ccc;
+    list-style: none;
+    
 }
-
 .search__label:focus-within ~ .search__listing,
 .search__listing:active {
     opacity: 1;
@@ -107,9 +107,9 @@ input {
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    
+    transition: background 0.2s ease-in-out;
 }
 .search__listing li:hover {
     background: #ccc;
-    transition: background 0.2s ease-in-out;
+    
 } 
