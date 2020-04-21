@@ -43,8 +43,8 @@ input {
 .search__label:focus-within .search__action,
 .search__input:not(:placeholder-shown) + .search__action {
     transform: translate(-5px, -15px) scale(0.8);
-    transition: all .2s ease-in-out;
     color: rgb(80, 110, 245);
+    transition: transform .2s ease-in-out, color .2s ease-in-out;
 }
 
 .search__label:hover,
@@ -62,7 +62,7 @@ input {
     top: calc(50% - 9px);
     cursor: text;
     color: rgb(136, 135, 135);
-    transition: all .2s ease-in-out;
+    transition: transform .2s ease-in-out, color .2s ease-in-out;
 }
 .search__arrow-wrapper {
     width: 0;
@@ -74,13 +74,13 @@ input {
     border: 8px solid transparent;
     border-top-color: rgb(136, 135, 135);
     border-bottom: 0;
-    transition: all .1 ease-in-out;
+    transition: transform .1s ease-in-out, border-top-color .1s ease-in-out;
 }
 
 .search__label:focus-within .search__arrow-wrapper {
     transform: rotate(180deg);
     border-top-color: rgb(80, 110, 245);
-    transition: all .1s ease-in-out;
+    transition: transform .1s ease-in-out, border-top-color .1s ease-in-out;
 }
 /***********************/
 .search__listing {
