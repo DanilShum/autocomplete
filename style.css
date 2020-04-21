@@ -33,10 +33,11 @@ input {
 }
 .search__input {
     width: 650px;
+    margin-top: 5px;
     padding: 0 20px;
     border: none;
     outline: none;
-    background: rgb(241, 241, 241);
+    background-color:transparent;
     transition: background .2s ease-in-out;
 }
 
@@ -47,12 +48,10 @@ input {
     transition: transform .2s ease-in-out, color .2s ease-in-out;
 }
 
-.search__label:hover,
-.search__label:hover .search__input {
+.search__label:hover {
     background: #ccc;
 }
-.search__label:focus-within,
-.search__label:focus-within .search__input {
+.search__label:focus-within {
     background: rgb(241, 241, 241);
 }
 .search__action {
