@@ -14,9 +14,8 @@ let search__li = search__listing.getElementsByTagName('li');
 for(i=0;i<search__li.length;i++) {
     search__li[i].onclick = function(evt) {
         evt.preventDefault();
-        if (this) {
-            search__input.value = this.textContent;
-        }
+              search__input.value = this.textContent;
+        
     };
 };
 
