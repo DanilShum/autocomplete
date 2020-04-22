@@ -1,26 +1,38 @@
-let search__label = document.querySelector('.search__label');
-let search__input = document.querySelector('.search__input');
-let search__section = document.querySelector('.search__section');
+// let searchLabel = document.querySelector('.search__label');
+// let searchSection = document.querySelector('.search__section');
+// let searchArrow = document.querySelector('.search__arrow');
+// let searchArrowWrapper = document.querySelector('.search__arrow-wrapper');
+// let searchListingWrapper = document.querySelector('.search__listing-wrapper');
+const searchInput = document.querySelector('.search__input')
+const searchListing = document.querySelector('.search__listing')
+const searchLi = document.querySelectorAll('.search__listing > li:not(.available)')
+const available = searchListing.querySelector('.available')
 
-let search__arrow = document.querySelector('.search__arrow');
-let search__arrowWrapper = document.querySelector('.search__arrow-wrapper');
-
-let search__listingWrapper = document.querySelector('.search__listing-wrapper');
-let search__listing = document.querySelector('.search__listing');
-let search__li = search__listing.getElementsByTagName('li');
-
-
-
-for(i=0;i<search__li.length;i++) {
-    search__li[i].onclick = function(evt) {
-        evt.preventDefault();
-              search__input.value = this.textContent;
-        
-    };
+for (let i = 0; i < searchLi.length; i++) {
+  searchLi[i].onclick = function (evt) {
+    evt.preventDefault()
+    searchInput.value = this.textContent
+  }
 };
 
 
+function search () {
+  const word = searchInput.value
+  const re = new RegExp('(' + word + ')', 'gi')
 
-
-
-
+  for (let i = 0; i < searchLi.length; i++) {
+    if (re.test(searchLi[i].innerText)) {
+      searchLi[i].style.display = ''
+      searchLi[i].innerHTML = searchLi[i].innerText.replace(re, '<span>$1</span>')
+      /* выделение искомого слова */
+    } else {
+      searchLi[i].style.display = 'none'
+    };
+  };
+  if (re.test(searchListing.innerText)) {
+    available.style.display = 'none'
+  } else {
+    available.style.display = 'block'
+  };
+};
+searchInput.oninput = search;
