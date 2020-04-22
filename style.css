@@ -115,7 +115,7 @@ input {
     background: rgb(168, 168, 168);
     
 }
-.search__listing li:hover {
+.search__listing li:hover:not(.available) {
     background: rgb(235, 235, 235);
 }
 .available {
