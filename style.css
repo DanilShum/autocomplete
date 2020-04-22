@@ -115,11 +115,16 @@ input {
     background: rgb(168, 168, 168);
     
 }
-.search__listing li:hover:not(.available) {
-    background: rgb(235, 235, 235);
+.search__listing li:hover:not(.available):not(.target) {
+    background: rgb(235, 235, 235) ;
 }
+
 .available {
     margin: 0;
     padding: 0;
     display: none;
+}
+.target {
+    background: rgba(111, 169, 246, 0.24);
+    color: #1867c0;
 }
