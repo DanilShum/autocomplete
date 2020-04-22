@@ -12,9 +12,8 @@ const searchLi = Array.from(document.querySelectorAll('.search__listing > li:not
 searchLi.forEach(function (item, i, arr) {
   item.onclick = function (evt) {
     evt.preventDefault()
-    searchInput.value = this.textContent
-
     const target = evt.target
+    searchInput.value = target.textContent
     arr.forEach(function (led) {
       led.classList.toggle('target', led === target)
     })
