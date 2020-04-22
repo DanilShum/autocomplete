@@ -99,7 +99,8 @@ input {
     opacity: 1;
     visibility: visible;
     overflow-y: auto;
-    height: 400px;
+    height: 100%;
+    max-height: 400px;
     width: 700px;
 }
 .search__listing li {
@@ -111,16 +112,14 @@ input {
     transition: background 0.2s ease-in-out;
 }
 .search__listing li > span {
-    background: rgb(200, 200, 200);
+    background: rgb(168, 168, 168);
     
 }
 .search__listing li:hover {
-    background: #ccc;
-    
-}
-.search__listing li::first-letter {
-    text-transform: uppercase;
+    background: rgb(235, 235, 235);
 }
 .available {
+    margin: 0;
+    padding: 0;
     display: none;
 }
