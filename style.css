@@ -128,3 +128,8 @@ input {
     background: rgba(111, 169, 246, 0.24);
     color: #1867c0;
 }
+
+.focused {
+    color: green;
+    background: rgb(195, 194, 194) ;
+}
