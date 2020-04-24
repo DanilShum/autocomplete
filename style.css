@@ -118,7 +118,9 @@ input {
 .search__listing li:hover:not(.available):not(.target) {
     background: rgb(235, 235, 235) ;
 }
-
+.hidden__li {
+    display: none;
+}
 .available {
     margin: 0;
     padding: 0;
