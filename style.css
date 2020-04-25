@@ -118,7 +118,9 @@ input {
 .search__listing li:hover:not(.available):not(.target) {
     background: rgb(235, 235, 235) ;
 }
-
+.hidden__li {
+    display: none;
+}
 .available {
     margin: 0;
     padding: 0;
@@ -127,4 +129,9 @@ input {
 .target {
     background: rgba(111, 169, 246, 0.24);
     color: #1867c0;
+}
+
+.focused {
+    color: green;
+    background: rgb(195, 194, 194) ;
 }
