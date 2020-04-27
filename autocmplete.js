@@ -21,13 +21,13 @@ searchInput.addEventListener('keydown', function (event) {
   if (event.code === 'ArrowDown') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    arrow(focusedLi, getNextSibling, 'focused', scrollListDown, searchLi)
+    arrow(focusedLi, getNextSibling, scrollListDown)
   }
 
   if (event.code === 'ArrowUp') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    arrow(focusedLi, getPreviousSibling, 'focused', scrollListUp, searchLi)
+    arrow(focusedLi, getPreviousSibling, scrollListUp)
   }
 
   if (event.code === 'Enter') {
@@ -40,6 +40,18 @@ searchInput.addEventListener('keydown', function (event) {
   if (event.code === 'Escape') {
     event.preventDefault()
     searchInput.blur()
+  }
+})
+
+searchInput.addEventListener('input', function (event) {
+  const word = searchInput.value
+  const re = new RegExp('(' + word + ')', 'gi')
+  textSelection(re)
+
+  if (re.test(searchListing.innerText)) {
+    available.style.display = 'none'
+  } else {
+    available.style.display = 'block'
   }
 })
 
@@ -65,25 +77,13 @@ const getPreviousSibling = function (elem, selector) {
   }
 }
 
-searchInput.addEventListener('input', function (event) {
-  const word = searchInput.value
-  const re = new RegExp('(' + word + ')', 'gi')
-  textSelection(searchLi, re, 'hidden__li')
-
-  if (re.test(searchListing.innerText)) {
-    available.style.display = 'none'
-  } else {
-    available.style.display = 'block'
-  }
-})
-
-function textSelection (li, reg, selector) {
-  li.forEach(function (item, i, arr) {
+function textSelection (reg) {
+  searchLi.forEach(function (item, i, arr) {
     if (reg.test(item.innerText)) {
-      item.classList.remove(selector)
+      item.classList.remove('hidden__li')
       item.innerHTML = item.innerText.replace(reg, '<span>$1</span>')
     } else {
-      item.classList.add(selector)
+      item.classList.add('hidden__li')
     };
   })
 }
@@ -95,31 +95,31 @@ function selectOption (selectedLi) {
   })
 }
 
-const arrow = function (focusElement, sibling, selector, scrollList, searchLi) {
+const arrow = function (focusElement, sibling, scrollList) {
   if (focusElement) {
     const stepLi = sibling(focusElement, ':not(.hidden__li):not(.available)')
     if (stepLi) {
-      focusElement.classList.remove(selector)
-      stepLi.classList.add(selector)
+      focusElement.classList.remove('focused')
+      stepLi.classList.add('focused')
       if (event.code === 'ArrowUp') {
         stepLi.scrollIntoView(true)
       } else { focusElement.scrollIntoView(true) }
     } else {
       const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
-      focusElement.classList.remove(selector)
-      scrollList(lastLI, selector)
+      focusElement.classList.remove('focused')
+      scrollList(lastLI)
     }
   } else {
-    searchLi[0].classList.add(selector)
+    searchLi[0].classList.add('focused')
   }
 }
 
-const scrollListDown = function (lastLi, selector) {
+const scrollListDown = function (lastLi) {
   searchListing.scrollTo(0, 0)
-  lastLi[0].classList.add(selector)
+  lastLi[0].classList.add('focused')
 }
 
-const scrollListUp = function (lastLi, selector) {
-  lastLi[lastLi.length - 1].classList.add(selector)
+const scrollListUp = function (lastLi) {
+  lastLi[lastLi.length - 1].classList.add('focused')
   searchListing.scrollTop = searchListing.scrollHeight
 }
