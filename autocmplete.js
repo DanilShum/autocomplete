@@ -3,68 +3,37 @@ const searchListing = document.querySelector('.search__listing')
 const available = searchListing.querySelector('.available')
 const searchLi = Array.from(document.querySelectorAll('.search__listing > li:not(.available)'))
 
-
 searchLi.forEach(function (item, i, arr) {
   item.addEventListener('click', function (evt) {
     evt.preventDefault()
-    const target = evt.target
-    const optin = selectOption(target)
+    selectOption(evt.target)
   })
 })
 
 searchInput.addEventListener('blur', function (input) {
-    const focusedLi = document.querySelector('.focused')
-    if (focusedLi) {
-      focusedLi.classList.remove('focused')
-    }
+  const focusedLi = document.querySelector('.focused')
+  if (focusedLi) {
+    focusedLi.classList.remove('focused')
+  }
 })
 
 searchInput.addEventListener('keydown', function (event) {
   if (event.code === 'ArrowDown') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    if (focusedLi) {
-      const nextLi = getNextSibling(focusedLi, ':not(.hidden__li):not(.available)')
-      
-      if (nextLi) {
-        focusedLi.classList.remove('focused')
-        nextLi.classList.add('focused')
-        focusedLi.scrollIntoView(true)
-      } else {
-        searchListing.scrollTo(0, 0)
-        const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
-        focusedLi.classList.remove('focused')
-        lastLI[0].classList.add('focused')
-      }
-    } else {
-      searchLi[0].classList.add('focused')
-    }
+    arrow(focusedLi, getNextSibling, 'focused', scrollListDown, searchLi)
   }
 
   if (event.code === 'ArrowUp') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    if (focusedLi) {
-      const prevLi = getPreviousSibling(focusedLi, ':not(.hidden__li):not(.available)')
-      if (prevLi) {
-        focusedLi.classList.remove('focused')
-        prevLi.classList.add('focused')
-        prevLi.scrollIntoView(true)
-      } else {
-        const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
-        lastLI[lastLI.length - 1].classList.add('focused')
-        focusedLi.classList.remove('focused')
-        searchListing.scrollTop = searchListing.scrollHeight
-      }
-    } else {
-      searchLi[0].classList.add('focused')
-     }
-  } 
- 
+    arrow(focusedLi, getPreviousSibling, 'focused', scrollListUp, searchLi)
+  }
+
   if (event.code === 'Enter') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    const optin = selectOption(focusedLi);
+    selectOption(focusedLi)
     searchInput.blur()
   }
 
@@ -99,7 +68,7 @@ const getPreviousSibling = function (elem, selector) {
 searchInput.addEventListener('input', function (event) {
   const word = searchInput.value
   const re = new RegExp('(' + word + ')', 'gi')
-  const selection = textSelection(searchLi, re, 'hidden__li')
+  textSelection(searchLi, re, 'hidden__li')
 
   if (re.test(searchListing.innerText)) {
     available.style.display = 'none'
@@ -126,4 +95,31 @@ function selectOption (selectedLi) {
   })
 }
 
+const arrow = function (focusElement, sibling, selector, scrollList, searchLi) {
+  if (focusElement) {
+    const stepLi = sibling(focusElement, ':not(.hidden__li):not(.available)')
+    if (stepLi) {
+      focusElement.classList.remove(selector)
+      stepLi.classList.add(selector)
+      if (event.code === 'ArrowUp') {
+        stepLi.scrollIntoView(true)
+      } else { focusElement.scrollIntoView(true) }
+    } else {
+      const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
+      focusElement.classList.remove(selector)
+      scrollList(lastLI, selector)
+    }
+  } else {
+    searchLi[0].classList.add(selector)
+  }
+}
 
+const scrollListDown = function (lastLi, selector) {
+  searchListing.scrollTo(0, 0)
+  lastLi[0].classList.add(selector)
+}
+
+const scrollListUp = function (lastLi, selector) {
+  lastLi[lastLi.length - 1].classList.add(selector)
+  searchListing.scrollTop = searchListing.scrollHeight
+}
