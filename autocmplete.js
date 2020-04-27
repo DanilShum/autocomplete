@@ -60,7 +60,7 @@ searchInput.addEventListener('keydown', function (event) {
       searchLi[0].classList.add('focused')
      }
   } 
-  
+ 
   if (event.code === 'Enter') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
