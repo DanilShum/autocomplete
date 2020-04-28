@@ -3,81 +3,55 @@ const searchListing = document.querySelector('.search__listing')
 const available = searchListing.querySelector('.available')
 const searchLi = Array.from(document.querySelectorAll('.search__listing > li:not(.available)'))
 
-
 searchLi.forEach(function (item, i, arr) {
   item.addEventListener('click', function (evt) {
     evt.preventDefault()
-    const target = evt.target
-    searchInput.value = target.textContent
-    arr.forEach(function (led) {
-      led.classList.toggle('target', led === target)
-    })
+    selectOption(evt.target)
   })
 })
 
 searchInput.addEventListener('blur', function (input) {
   const focusedLi = document.querySelector('.focused')
-  focusedLi.classList.remove('focused')
+  if (focusedLi) {
+    focusedLi.classList.remove('focused')
+  }
 })
 
 searchInput.addEventListener('keydown', function (event) {
   if (event.code === 'ArrowDown') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    if (focusedLi) {
-      const nextLi = getNextSibling(focusedLi, ':not(.hidden__li):not(.available)')
-      
-      if (nextLi) {
-        focusedLi.classList.remove('focused')
-        nextLi.classList.add('focused')
-        focusedLi.scrollIntoView(true)
-      } else {
-        searchListing.scrollTo(0, 0)
-        const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
-        focusedLi.classList.remove('focused')
-        lastLI[0].classList.add('focused')
-      }
-    } else {
-      searchLi[0].classList.add('focused')
-    }
+    arrow(focusedLi, getNextSibling, scrollListDown)
   }
 
   if (event.code === 'ArrowUp') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    if (focusedLi) {
-      const prevLi = getPreviousSibling(focusedLi, ':not(.hidden__li):not(.available)')
-      
-      if (prevLi) {
-        focusedLi.classList.remove('focused')
-        prevLi.classList.add('focused')
-        prevLi.scrollIntoView(true)
-      } else {
-        const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
-        lastLI[lastLI.length - 1].classList.add('focused')
-        focusedLi.classList.remove('focused')
-        searchListing.scrollTop = searchListing.scrollHeight
-      }
-    } else {
-      searchLi[0].classList.add('focused')
-    }
-  } 
- 
+    arrow(focusedLi, getPreviousSibling, scrollListUp)
+  }
+
   if (event.code === 'Enter') {
     event.preventDefault()
     const focusedLi = document.querySelector('.focused')
-    searchInput.value = focusedLi.textContent
-    searchLi.forEach(function (item, i, arr) {
-      arr.forEach(function (led) {
-        led.classList.toggle('target', led === focusedLi)
-      })
-    })
+    selectOption(focusedLi)
     searchInput.blur()
   }
 
   if (event.code === 'Escape') {
     event.preventDefault()
     searchInput.blur()
+  }
+})
+
+searchInput.addEventListener('input', function (event) {
+  const word = searchInput.value
+  const re = new RegExp('(' + word + ')', 'gi')
+  textSelection(re)
+
+  if (re.test(searchListing.innerText)) {
+    available.style.display = 'none'
+  } else {
+    available.style.display = 'block'
   }
 })
 
@@ -94,6 +68,7 @@ const getNextSibling = function (elem, selector) {
 
 const getPreviousSibling = function (elem, selector) {
   let sibling = elem.previousElementSibling
+
   if (!selector) return sibling
 
   while (sibling) {
@@ -102,23 +77,47 @@ const getPreviousSibling = function (elem, selector) {
   }
 }
 
-function search () {
-  const word = searchInput.value
-  const re = new RegExp('(' + word + ')', 'gi')
-
+function textSelection (reg) {
   searchLi.forEach(function (item, i, arr) {
-    if (re.test(item.innerText)) {
+    if (reg.test(item.innerText)) {
       item.classList.remove('hidden__li')
-      item.innerHTML = item.innerText.replace(re, '<span>$1</span>')
+      item.innerHTML = item.innerText.replace(reg, '<span>$1</span>')
     } else {
       item.classList.add('hidden__li')
     };
   })
-  if (re.test(searchListing.innerText)) {
-    available.style.display = 'none'
-  } else {
-    available.style.display = 'block'
-  };
-};
+}
 
-searchInput.oninput = search
+function selectOption (selectedLi) {
+  searchInput.value = selectedLi.textContent
+  searchLi.forEach(function (li) {
+    li.classList.toggle('target', li === selectedLi)
+  })
+}
+
+const arrow = function (focusElement, sibling, scrollList) {
+  if (focusElement) {
+    const stepLi = sibling(focusElement, ':not(.hidden__li):not(.available)')
+    if (stepLi) {
+      focusElement.classList.remove('focused')
+      stepLi.classList.add('focused')
+      stepLi.scrollIntoView(true)
+    } else {
+      const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
+      focusElement.classList.remove('focused')
+      scrollList(lastLI)
+    }
+  } else {
+    searchLi[0].classList.add('focused')
+  }
+}
+
+const scrollListDown = function (lastLi) {
+  searchListing.scrollTo(0, 0)
+  lastLi[0].classList.add('focused')
+}
+
+const scrollListUp = function (lastLi) {
+  lastLi[lastLi.length - 1].classList.add('focused')
+  searchListing.scrollTop = searchListing.scrollHeight
+}
