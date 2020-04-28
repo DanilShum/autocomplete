@@ -101,9 +101,7 @@ const arrow = function (focusElement, sibling, scrollList) {
     if (stepLi) {
       focusElement.classList.remove('focused')
       stepLi.classList.add('focused')
-      if (event.code === 'ArrowUp') {
-        stepLi.scrollIntoView(true)
-      } else { focusElement.scrollIntoView(true) }
+      stepLi.scrollIntoView(true)
     } else {
       const lastLI = document.querySelectorAll('.search__listing > li:not(.hidden__li):not(.available)')
       focusElement.classList.remove('focused')
